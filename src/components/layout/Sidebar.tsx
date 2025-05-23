@@ -10,8 +10,10 @@ import {
   BarChart3, 
   Settings, 
   Library,
-  Menu
+  UserCog,
+  UserCircle
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -19,6 +21,8 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
+  const { user } = useAuth();
+  
   const menuItems = [
     { icon: Grid3X3, label: "Dashboard", path: "/" },
     { icon: BookOpen, label: "Books", path: "/books" },
@@ -28,8 +32,20 @@ const Sidebar = ({ isOpen, onToggle }: SidebarProps) => {
     { icon: Library, label: "Categories", path: "/categories" },
     { icon: User, label: "Authors", path: "/authors" },
     { icon: BarChart3, label: "Reports", path: "/reports" },
-    { icon: Settings, label: "Settings", path: "/settings" },
+    { icon: UserCircle, label: "My Profile", path: "/profile" },
   ];
+  
+  // Add admin-only menu items
+  if (user?.role === "admin") {
+    menuItems.push(
+      { icon: UserCog, label: "User Management", path: "/users" }
+    );
+  }
+  
+  // Add settings at the end
+  menuItems.push(
+    { icon: Settings, label: "Settings", path: "/settings" }
+  );
 
   return (
     <div className={`fixed left-0 top-0 h-full bg-white shadow-lg transition-all duration-300 z-50 ${
