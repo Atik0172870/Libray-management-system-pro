@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,11 +15,14 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Plus, Search, Edit, Trash2, Eye, Mail, Phone } from "lucide-react";
 import MemberModal from "@/components/modals/MemberModal";
+import { useNotifications } from "@/contexts/NotificationsContext";
 
 const Members = () => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingMember, setEditingMember] = useState(null);
+  const [editingMember, setEditingMember] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const { addNotification } = useNotifications();
 
   const members = [
     {
@@ -83,6 +87,19 @@ const Members = () => {
     setIsModalOpen(true);
   };
 
+  const handleViewMember = (id: number) => {
+    navigate(`/members/${id}`);
+  };
+
+  const handleDeleteMember = (member: any) => {
+    // In a real app, make an API call to delete
+    addNotification({
+      title: "Member Deleted",
+      message: `${member.name} has been removed from the system.`,
+      type: "info"
+    });
+  };
+
   const getStatusBadge = (status: string) => {
     return status === "Active" ? (
       <Badge className="bg-green-100 text-green-800">Active</Badge>
@@ -95,8 +112,8 @@ const Members = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Members Management</h1>
-          <p className="text-gray-600 mt-1">Manage library members and their accounts</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Members Management</h1>
+          <p className="text-gray-600 mt-1 dark:text-gray-400">Manage library members and their accounts</p>
         </div>
         <Button onClick={handleAddMember} className="bg-blue-600 hover:bg-blue-700">
           <Plus className="mr-2 h-4 w-4" />
@@ -164,13 +181,18 @@ const Members = () => {
                   </TableCell>
                   <TableCell>
                     <div className="flex space-x-2">
-                      <Button variant="ghost" size="sm">
+                      <Button variant="ghost" size="sm" onClick={() => handleViewMember(member.id)}>
                         <Eye className="h-4 w-4" />
                       </Button>
                       <Button variant="ghost" size="sm" onClick={() => handleEditMember(member)}>
                         <Edit className="h-4 w-4" />
                       </Button>
-                      <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700">
+                      <Button 
+                        variant="ghost" 
+                        size="sm" 
+                        className="text-red-600 hover:text-red-700"
+                        onClick={() => handleDeleteMember(member)}
+                      >
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>

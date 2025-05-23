@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Dashboard from "@/components/pages/Dashboard";
 import Books from "@/components/pages/Books";
 import Members from "@/components/pages/Members";
+import MemberDetail from "@/components/pages/MemberDetail";
 import Borrowing from "@/components/pages/Borrowing";
 import Returns from "@/components/pages/Returns";
 import Categories from "@/components/pages/Categories";
@@ -22,7 +23,7 @@ const Index = () => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
+    <div className="min-h-screen bg-gray-50 flex dark:bg-gray-900">
       <Sidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-16'}`}>
         <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
@@ -31,6 +32,7 @@ const Index = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/books" element={<Books />} />
             <Route path="/members" element={<Members />} />
+            <Route path="/members/:id" element={<MemberDetail />} />
             <Route path="/borrowing" element={<Borrowing />} />
             <Route path="/returns" element={<Returns />} />
             <Route path="/categories" element={<Categories />} />
