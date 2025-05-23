@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const MemberDetail = () => {
   const { id } = useParams();
@@ -43,6 +44,7 @@ const MemberDetail = () => {
         joinDate: "2024-01-15",
         status: "Active",
         address: "123 Main St, Anytown, CA 90210",
+        avatar: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
         booksIssued: [
           { id: 1, title: "To Kill a Mockingbird", issueDate: "2024-05-01", dueDate: "2024-05-15", status: "On time" },
           { id: 2, title: "1984", issueDate: "2024-04-20", dueDate: "2024-05-04", status: "Overdue" },
@@ -94,6 +96,15 @@ const MemberDetail = () => {
     );
   };
 
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -123,9 +134,10 @@ const MemberDetail = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col items-center mb-6">
-                <div className="h-24 w-24 rounded-full bg-gray-200 flex items-center justify-center text-3xl text-gray-600 mb-4">
-                  {member.name.charAt(0)}
-                </div>
+                <Avatar className="h-24 w-24 mb-4">
+                  <AvatarImage src={member.avatar} />
+                  <AvatarFallback className="text-3xl">{getInitials(member.name)}</AvatarFallback>
+                </Avatar>
                 <h3 className="text-xl font-semibold">{member.name}</h3>
                 <div className="mt-1">{getStatusBadge(member.status)}</div>
                 <p className="text-gray-500 mt-1">Member ID: {member.membershipId}</p>
@@ -164,7 +176,7 @@ const MemberDetail = () => {
             </CardContent>
           </Card>
         </div>
-
+        
         <div className="col-span-12 md:col-span-8">
           <Card>
             <CardHeader>

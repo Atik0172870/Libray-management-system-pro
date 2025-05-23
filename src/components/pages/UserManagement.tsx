@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -51,7 +50,7 @@ const UserManagement = () => {
       email: 'admin@library.com',
       role: 'admin',
       status: 'active',
-      avatar: '',
+      avatar: 'https://images.unsplash.com/photo-1581092795360-fd1ca04f0952',
       dateAdded: '2023-01-15',
     },
     {
@@ -60,6 +59,7 @@ const UserManagement = () => {
       email: 'librarian@library.com',
       role: 'librarian',
       status: 'active',
+      avatar: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
       dateAdded: '2023-02-20',
     },
     {
@@ -68,6 +68,7 @@ const UserManagement = () => {
       email: 'sarah@example.com',
       role: 'user',
       status: 'active',
+      avatar: '',
       dateAdded: '2023-03-10',
     },
     {
@@ -76,6 +77,7 @@ const UserManagement = () => {
       email: 'mike@example.com',
       role: 'user',
       status: 'inactive',
+      avatar: '',
       dateAdded: '2023-04-05',
     },
   ]);
@@ -258,7 +260,7 @@ const UserManagement = () => {
         </Dialog>
       </div>
 
-      <div className="bg-white rounded-lg shadow overflow-hidden">
+      <div className="bg-white rounded-lg shadow overflow-hidden dark:bg-gray-800">
         <Table>
           <TableHeader>
             <TableRow>

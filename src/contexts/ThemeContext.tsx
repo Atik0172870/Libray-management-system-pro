@@ -14,11 +14,11 @@ interface ThemeContextType {
 }
 
 const themes = [
-  { id: 'light', name: 'Light', primaryColor: '#ffffff' },
-  { id: 'dark', name: 'Dark', primaryColor: '#1e293b' },
-  { id: 'blue', name: 'Ocean Blue', primaryColor: '#0ea5e9' },
-  { id: 'green', name: 'Forest Green', primaryColor: '#16a34a' },
-  { id: 'purple', name: 'Royal Purple', primaryColor: '#8b5cf6' }
+  { id: 'light' as ThemeType, name: 'Light', primaryColor: '#ffffff' },
+  { id: 'dark' as ThemeType, name: 'Dark', primaryColor: '#1e293b' },
+  { id: 'blue' as ThemeType, name: 'Ocean Blue', primaryColor: '#0ea5e9' },
+  { id: 'green' as ThemeType, name: 'Forest Green', primaryColor: '#16a34a' },
+  { id: 'purple' as ThemeType, name: 'Royal Purple', primaryColor: '#8b5cf6' }
 ];
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);

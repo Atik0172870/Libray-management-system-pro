@@ -14,6 +14,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Plus, Search, Edit, Trash2, User, Mail, Globe } from "lucide-react";
 import AuthorModal from "@/components/modals/AuthorModal";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Authors = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +30,8 @@ const Authors = () => {
       birthYear: 1896,
       biography: "American novelist and short story writer",
       bookCount: 8,
-      popularBooks: ["The Great Gatsby", "Tender Is the Night"]
+      popularBooks: ["The Great Gatsby", "Tender Is the Night"],
+      avatar: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952"
     },
     {
       id: 2,
@@ -39,7 +41,8 @@ const Authors = () => {
       birthYear: 1926,
       biography: "American novelist known for To Kill a Mockingbird",
       bookCount: 3,
-      popularBooks: ["To Kill a Mockingbird", "Go Set a Watchman"]
+      popularBooks: ["To Kill a Mockingbird", "Go Set a Watchman"],
+      avatar: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
     },
     {
       id: 3,
@@ -49,7 +52,8 @@ const Authors = () => {
       birthYear: 1903,
       biography: "English novelist and essayist",
       bookCount: 12,
-      popularBooks: ["1984", "Animal Farm", "Homage to Catalonia"]
+      popularBooks: ["1984", "Animal Farm", "Homage to Catalonia"],
+      avatar: ""
     },
     {
       id: 4,
@@ -59,7 +63,8 @@ const Authors = () => {
       birthYear: 1919,
       biography: "American writer known for The Catcher in the Rye",
       bookCount: 5,
-      popularBooks: ["The Catcher in the Rye", "Nine Stories"]
+      popularBooks: ["The Catcher in the Rye", "Nine Stories"],
+      avatar: ""
     }
   ];
 
@@ -76,6 +81,15 @@ const Authors = () => {
   const handleEditAuthor = (author: any) => {
     setEditingAuthor(author);
     setIsModalOpen(true);
+  };
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
   };
 
   return (
@@ -165,7 +179,15 @@ const Authors = () => {
             <TableBody>
               {filteredAuthors.map((author) => (
                 <TableRow key={author.id}>
-                  <TableCell className="font-medium">{author.name}</TableCell>
+                  <TableCell className="font-medium">
+                    <div className="flex items-center space-x-3">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={author.avatar} />
+                        <AvatarFallback>{getInitials(author.name)}</AvatarFallback>
+                      </Avatar>
+                      <span>{author.name}</span>
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <div className="flex items-center text-sm">
                       <Mail className="h-3 w-3 mr-1" />

@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Search, Edit, Trash2, Eye, Mail, Phone } from "lucide-react";
 import MemberModal from "@/components/modals/MemberModal";
 import { useNotifications } from "@/contexts/NotificationsContext";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const Members = () => {
   const navigate = useNavigate();
@@ -34,7 +35,8 @@ const Members = () => {
       joinDate: "2024-01-15",
       status: "Active",
       booksIssued: 3,
-      overdue: 0
+      overdue: 0,
+      avatar: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952"
     },
     {
       id: 2,
@@ -45,7 +47,8 @@ const Members = () => {
       joinDate: "2024-02-10",
       status: "Active",
       booksIssued: 1,
-      overdue: 0
+      overdue: 0,
+      avatar: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158"
     },
     {
       id: 3,
@@ -56,7 +59,8 @@ const Members = () => {
       joinDate: "2024-01-20",
       status: "Suspended",
       booksIssued: 2,
-      overdue: 1
+      overdue: 1,
+      avatar: ""
     },
     {
       id: 4,
@@ -67,7 +71,8 @@ const Members = () => {
       joinDate: "2024-03-05",
       status: "Active",
       booksIssued: 0,
-      overdue: 0
+      overdue: 0,
+      avatar: ""
     }
   ];
 
@@ -106,6 +111,15 @@ const Members = () => {
     ) : (
       <Badge className="bg-red-100 text-red-800">Suspended</Badge>
     );
+  };
+
+  const getInitials = (name: string) => {
+    return name
+      .split(' ')
+      .map(part => part[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
   };
 
   return (
@@ -153,7 +167,15 @@ const Members = () => {
             <TableBody>
               {filteredMembers.map((member) => (
                 <TableRow key={member.id}>
-                  <TableCell className="font-medium">{member.name}</TableCell>
+                  <TableCell className="font-medium">
+                    <div className="flex items-center space-x-3">
+                      <Avatar className="h-8 w-8">
+                        <AvatarImage src={member.avatar} />
+                        <AvatarFallback>{getInitials(member.name)}</AvatarFallback>
+                      </Avatar>
+                      <span>{member.name}</span>
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <div className="space-y-1">
                       <div className="flex items-center text-sm">
